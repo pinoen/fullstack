@@ -23,28 +23,40 @@ const App = () => {
   return (
     <div>
       <h1>Give feedback</h1>
-      <button onClick={handleGood}>good</button>
-      <button onClick={handleNeutral}>neutral</button>
-      <button onClick={handleBad}>bad</button>
+      <Button handleClick={handleGood} text={"good"} />
+      <Button handleClick={handleNeutral} text={"neutral"} />
+      <Button handleClick={handleBad} text={"bad"} />
 
       {total > 0 ? <Statistics good={good} neutral={neutral} bad={bad} total={total} /> : <p>No feedback given</p>}
     </div>
   )
 }
 
+export default App
+
 const Statistics = ({ good, neutral, bad, total }) => {
   return (
     <>
       <h1>Statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
+      <StatisticLine text={"good"} value={good} />
+      <StatisticLine text={"neutral"} value={neutral} />
+      <StatisticLine text={"bad"} value={bad} />
       <hr />
-      <p>TOTAL {total}</p>
-      <p>AVERAGE {(good - bad) / total}</p>
-      <p>POSITIVE {(good / total) * 100} %</p>
+      <StatisticLine text={"TOTAL"} value={total} />
+      <StatisticLine text={"AVERAGE"} value={(good - bad) / total} />
+      <StatisticLine text={"POSITIVE"} value={(good / total) * 100} />
     </>
   )
 }
 
-export default App
+const Button = ({ handleClick, text }) => {
+  return (
+    <button onClick={handleClick}>{text}</button>
+  )
+}
+
+const StatisticLine = ({ text, value }) => {
+  return (
+    <p>{text} {value} {text === "POSITIVE" && "%"}</p>
+  )
+}
