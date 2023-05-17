@@ -12,20 +12,34 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
+  const getDefaultArray = () => {
+    let obj = {};
+    for (let i = 1; i < anecdotes.length + 1; i++) {
+      obj[i] = 0;
+    }
+    return obj;
+  };
+
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(getDefaultArray)
+
   const randomIndex = Math.floor(Math.random() * anecdotes.length)
 
   const handleClick = () => {
     setSelected(randomIndex)
-    console.log(selected)
   }
+
+  const handleVote = (id) => {
+    setPoints((prev) => ({ ...prev, [id]: prev[id] + 1 }));
+  }
+
+  console.log(points)
 
   return (
     <div>
       {anecdotes[selected]}
-      <br />
-      <br />
-      <button onClick={handleClick}>next anecdote</button>
+      <p>has {points[selected + 1]} votes</p>
+      <button onClick={() => handleVote(selected + 1)}>vote</button><button onClick={handleClick}>next anecdote</button>
     </div>
   )
 }
