@@ -38,13 +38,16 @@ const Statistics = ({ good, neutral, bad, total }) => {
   return (
     <>
       <h1>Statistics</h1>
-      <StatisticLine text={"good"} value={good} />
-      <StatisticLine text={"neutral"} value={neutral} />
-      <StatisticLine text={"bad"} value={bad} />
-      <hr />
-      <StatisticLine text={"TOTAL"} value={total} />
-      <StatisticLine text={"AVERAGE"} value={(good - bad) / total} />
-      <StatisticLine text={"POSITIVE"} value={(good / total) * 100} />
+      <table>
+        <tbody style={{ textAlign: 'center' }}>
+          <StatisticLine text={"good"} value={good} />
+          <StatisticLine text={"neutral"} value={neutral} />
+          <StatisticLine text={"bad"} value={bad} />
+          <StatisticLine text={"TOTAL"} value={total} />
+          <StatisticLine text={"AVERAGE"} value={(good - bad) / total} />
+          <StatisticLine text={"POSITIVE"} value={(good / total) * 100} />
+        </tbody>
+      </table>
     </>
   )
 }
@@ -57,6 +60,9 @@ const Button = ({ handleClick, text }) => {
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <p>{text} {value} {text === "POSITIVE" && "%"}</p>
+    <tr>
+      <td>{text}</td>
+      <td>{value} {text === "POSITIVE" && "%"}</td>
+    </tr>
   )
 }
