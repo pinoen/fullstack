@@ -20,7 +20,7 @@ const App = () => {
       },
       {
         name: 'Redux',
-        exercises: 11,
+        exercises: 15,
         id: 4
       }
     ]
@@ -56,13 +56,8 @@ const Part = (props) => {
 }
 
 const Total = ({ parts }) => {
-  let total = 0;
-  for (const part of parts) {
-    total += part.exercises
-  }
-
   return (
-    <p style={{ fontWeight: 'bold' }}>Number of exercises {total}</p>
+    <p style={{ fontWeight: 'bold' }}>Number of exercises {parts.reduce((acc, curr) => acc + curr.exercises, 0)}</p>
   )
 }
 
