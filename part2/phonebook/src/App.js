@@ -46,11 +46,30 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <span>Filter shown by</span><input value={searchWord} onChange={handleSearch} />
-      <br />
-      <br />
+      <Filter searchWord={searchWord} handleSearch={handleSearch} />
 
       <h2>Add a new</h2>
+      <PersonForm handleSubmit={handleSubmit} newName={newName} handleChange={handleChange} />
+
+      <h2>Numbers</h2>
+      {searchWord ? filteredArray.map(person => <Person key={person.id} person={person} />) : persons.map(person => <Person key={person.id} person={person} />)}
+    </div>
+  )
+}
+
+export default App
+
+const Filter = ({ searchWord, handleSearch }) => {
+  return (
+    <>
+      <span>Filter shown by</span><input value={searchWord} onChange={handleSearch} />
+    </>
+  )
+}
+
+const PersonForm = ({ handleSubmit, newName, handleChange }) => {
+  return (
+    <>
       <form onSubmit={handleSubmit}>
         <div>
           name: <input value={newName.name} onChange={handleChange} name='name' />
@@ -61,10 +80,14 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
-      {searchWord ? filteredArray.map(person => <p key={person.id}>{person.name} {person.number}</p>) : persons.map(person => <p key={person.id}>{person.name} {person.number}</p>)}
-    </div>
+    </>
   )
 }
 
-export default App
+const Person = ({ person }) => {
+  return (
+    <>
+      <p>{person.name} {person.number}</p>
+    </>
+  )
+}
