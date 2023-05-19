@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import personService from './services/person'
-import person from './services/person'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [searchWord, setSearchWord] = useState('')
+  const [notification, setNotification] = useState(null)
   const [newName, setNewName] = useState({
     name: '',
     number: '',
@@ -40,6 +40,10 @@ const App = () => {
 
         personService.updatePerson(targetedId, newName).then(updatedPerson => {
           setPersons(persons.map(person => person.id !== targetedId ? person : updatedPerson))
+          setNotification(`Contact named ${newName.name} updated successfully!`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 5000)
         })
       }
       setNewName({ name: '', number: '', id: '' })
@@ -48,6 +52,10 @@ const App = () => {
         .then(createdPerson => {
           setPersons(persons.concat(createdPerson))
           setNewName({ name: '', number: '', id: '' })
+          setNotification(`New contact named ${newName.name} added successfully!`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 5000)
         })
     }
   }
@@ -59,6 +67,7 @@ const App = () => {
 
       <h2>Add a new</h2>
       <PersonForm handleSubmit={handleSubmit} newName={newName} handleChange={handleChange} />
+      <Notificacion message={notification} />
 
       <h2>Numbers</h2>
       {searchWord ? filteredArray.map(person => <Person persons={persons} setPersons={setPersons} key={person.id} person={person} />) : persons.map(person => <Person persons={persons} setPersons={setPersons} key={person.id} person={person} />)}
@@ -104,5 +113,24 @@ const Person = ({ person, persons, setPersons }) => {
     <>
       <p>{person.name} {person.number}</p><button onClick={handleDelete}>delete</button>
     </>
+  )
+}
+
+const Notificacion = ({ message }) => {
+  const style = {
+    border: '2px solid green',
+    color: 'green',
+    fontWeight: 'bolder',
+    padding: 10,
+    margin: 5
+  }
+  if (message === null) {
+    return;
+  }
+
+  return (
+    <div style={style}>
+      {message}
+    </div>
   )
 }
