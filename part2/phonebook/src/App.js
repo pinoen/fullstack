@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import personService from './services/person'
+import person from './services/person'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -19,7 +20,7 @@ const App = () => {
     setSearchWord(e.target.value)
   }
 
-  const filteredArray = persons.filter(person => person.name.toLocaleLowerCase().includes(searchWord.toLowerCase()));
+  const filteredArray = persons.filter(person => person.name.toLowerCase().includes(searchWord.toLowerCase()));
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -34,12 +35,18 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (persons.some(person => person.name === newName.name)) {
-      alert(`${newName.name} is already added to phonebook`)
+      if (window.confirm(`${newName.name} is already added to phonebook, replace the old number with a new one?`)) {
+        const targetedId = persons.filter(person => person.name === newName.name)[0].id;
+
+        personService.updatePerson(targetedId, newName).then(updatedPerson => {
+          setPersons(persons.map(person => person.id !== targetedId ? person : updatedPerson))
+        })
+      }
       setNewName({ name: '', number: '', id: '' })
     } else {
       personService.createPerson(newName)
-        .then(newPerson => {
-          setPersons(persons.concat(newPerson))
+        .then(createdPerson => {
+          setPersons(persons.concat(createdPerson))
           setNewName({ name: '', number: '', id: '' })
         })
     }
