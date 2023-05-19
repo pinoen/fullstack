@@ -1,16 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
@@ -26,39 +16,14 @@
       "id": 5
     },
     {
-      "name": "Vanesa Mena",
-      "number": "0225588",
+      "name": "Rafael Sanchez",
+      "number": "236-96584",
       "id": 6
     },
     {
-      "name": "Enzo Perez",
-      "number": "255-569841",
+      "name": "Pascual Alonso",
+      "number": "256-96325",
       "id": 7
-    },
-    {
-      "name": "Esteban Frasetto",
-      "number": "299-569852",
-      "id": 8
-    },
-    {
-      "name": "Ezequiel Blotto",
-      "number": "299-652842",
-      "id": 9
-    },
-    {
-      "name": "Patricio Contreras",
-      "number": "258-96582",
-      "id": 10
-    },
-    {
-      "name": "Federico Sotomayor",
-      "number": "589-963254",
-      "id": 11
-    },
-    {
-      "name": "Analia Tosco",
-      "number": "586-96582",
-      "id": 12
     }
   ]
 }
