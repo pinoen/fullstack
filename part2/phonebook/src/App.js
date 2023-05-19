@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import personService from './services/person'
+import person from './services/person'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [searchWord, setSearchWord] = useState('')
   const [notification, setNotification] = useState(null)
+  const [isError, setIsError] = useState(false)
   const [newName, setNewName] = useState({
     name: '',
     number: '',
@@ -44,6 +46,14 @@ const App = () => {
           setTimeout(() => {
             setNotification(null)
           }, 5000)
+        }).catch(err => {
+          setNotification(`Contact named ${newName.name} has been removed from the server.`)
+          setIsError(true)
+          setTimeout(() => {
+            setNotification(null)
+            setIsError(false)
+          }, 5000)
+          setPersons(persons.filter(person => person.name !== newName.name))
         })
       }
       setNewName({ name: '', number: '', id: '' })
@@ -67,7 +77,7 @@ const App = () => {
 
       <h2>Add a new</h2>
       <PersonForm handleSubmit={handleSubmit} newName={newName} handleChange={handleChange} />
-      <Notificacion message={notification} />
+      <Notificacion isError={isError} message={notification} />
 
       <h2>Numbers</h2>
       {searchWord ? filteredArray.map(person => <Person persons={persons} setPersons={setPersons} key={person.id} person={person} />) : persons.map(person => <Person persons={persons} setPersons={setPersons} key={person.id} person={person} />)}
@@ -116,10 +126,10 @@ const Person = ({ person, persons, setPersons }) => {
   )
 }
 
-const Notificacion = ({ message }) => {
+const Notificacion = ({ message, isError }) => {
   const style = {
-    border: '2px solid green',
-    color: 'green',
+    border: isError ? '2px solid red' : '2px solid green',
+    color: isError ? 'red' : 'green',
     fontWeight: 'bolder',
     padding: 10,
     margin: 5
