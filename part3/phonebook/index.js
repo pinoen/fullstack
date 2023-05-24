@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-app.use(express.json())
 
 let persons = [
   {
@@ -25,12 +24,12 @@ let persons = [
   }
 ]
 
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1><p>Here I am</p>')
+app.get('/api/persons', (req, res) => {
+  res.json(persons)
 })
 
-app.get('/api/persons', (request, response) => {
-  response.json(persons)
+app.get('/info', (req, res) => {
+  res.send(`<p>Phonebook has info for ${persons.length} people</p><p>${new Date().toString()}</p>`)
 })
 
 
