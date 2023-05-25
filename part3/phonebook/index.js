@@ -58,6 +58,24 @@ function createRandomIdNumber() {
 app.post('/api/persons/', (req, res) => {
   const body = req.body
 
+  if (!body.name) {
+    return res.status(400).json({
+      error: "name missing"
+    })
+  }
+
+  if (persons.filter(person => person.name === body.name).length === 1) {
+    return res.status(400).json({
+      error: 'name must be unique'
+    })
+  }
+
+  if (!body.number) {
+    return res.status(400).json({
+      error: "phone number missing"
+    })
+  }
+
   const person = {
     id: createRandomIdNumber(),
     name: body.name,
