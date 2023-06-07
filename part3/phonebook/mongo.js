@@ -47,4 +47,3 @@ if (process.argv[3] !== undefined && process.argv[4] !== undefined) {
 } else {
   showPhonebook()
 }
-
