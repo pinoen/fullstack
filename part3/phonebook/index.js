@@ -38,6 +38,16 @@ app.get('/api/persons', (req, res) => {
   })
 })
 
+app.get('/api/info', (req, res) => {
+  Person.find().then(result => {
+    res.send(`
+    <h1>The phonebook has ${result.length} people</h1>
+    <h3>${new Date()}</h3>    
+    `)
+  })
+
+})
+
 app.post('/api/persons/', (req, res) => {
   const body = req.body
 
