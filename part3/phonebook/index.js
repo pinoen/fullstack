@@ -87,6 +87,21 @@ app.delete('/api/persons/:id', (req, res, next) => {
   }).catch(err => next(err))
 })
 
+app.put('/api/persons/:id', (req, res, next) => {
+  const body = req.body
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  }
+
+  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+    .then(updatedPerson => {
+      res.json(updatedPerson)
+    })
+    .catch(err => next(err))
+})
+
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {
